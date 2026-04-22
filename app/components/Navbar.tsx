@@ -5,9 +5,11 @@ import { useState } from "react";
 import { PiShoppingCartBold } from "react-icons/pi";
 import { FaUserAlt } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     return (
         <nav className="w-full bg-white shadow-sm">
@@ -40,10 +42,28 @@ export default function Navbar() {
 
 
                 <div className="hidden md:flex justify-between items-center h-14">
-                    <div className="flex items-center space-x-6">
-                        <Link href="/home" className="text-gray-700 hover:text-black transition">Home</Link>
-                        <Link href="/shop" className="text-gray-700 hover:text-black transition">Shop</Link>
-                        <Link href="/contact" className="text-gray-700 hover:text-black transition">Contact</Link>
+                    <div className="flex items-center space-x-6   p-1 rounded-full">
+                        <Link
+                            href="/home"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/home" ? "bg-white shadow text-black" : "text-gray-600 hover:text-black"
+                                }`}
+                        >
+                            Home
+                        </Link>
+                        <Link
+                            href="/shop"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/shop" ? "bg-white shadow text-black" : "text-gray-600 hover:text-black"
+                                }`}
+                        >
+                            Shop
+                        </Link>
+                        <Link
+                            href="/contact"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/contact" ? "bg-white shadow text-black" : "text-gray-600 hover:text-black"
+                                }`}
+                        >
+                            Contact
+                        </Link>
                     </div>
                     <div className="flex items-center space-x-3">
                         <input
@@ -64,9 +84,9 @@ export default function Navbar() {
                             placeholder="Search..."
                             className="border rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-300 w-full"
                         />
-                        <Link href="/home" className="text-gray-700 hover:text-black py-1" onClick={() => setMenuOpen(false)}>Home</Link>
-                        <Link href="/shop" className="text-gray-700 hover:text-black py-1" onClick={() => setMenuOpen(false)}>Shop</Link>
-                        <Link href="/contact" className="text-gray-700 hover:text-black py-1" onClick={() => setMenuOpen(false)}>Contact</Link>
+                        <Link href="/home" className={`py-1 transition-colors ${pathname === "/home" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Home</Link>
+                        <Link href="/shop" className={`py-1 transition-colors ${pathname === "/shop" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
+                        <Link href="/contact" className={`py-1 transition-colors ${pathname === "/contact" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Contact</Link>
                     </div>
                 )}
             </div>
