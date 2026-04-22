@@ -6,9 +6,11 @@ import { PiShoppingCartBold } from "react-icons/pi";
 import { FaUserAlt } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
 import { usePathname } from "next/navigation";
+import { AuthModal } from "./AuthModal";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
     const pathname = usePathname();
 
     return (
@@ -23,7 +25,7 @@ export default function Navbar() {
                     />
                     <div className="flex items-center space-x-3">
                         <PiShoppingCartBold className="text-2xl cursor-pointer" />
-                        <FaUserAlt className="text-xl cursor-pointer" />
+                        <FaUserAlt onClick={() => setIsAuthModalOpen(true)} className="text-xl cursor-pointer" />
                         <button onClick={() => setMenuOpen(!menuOpen)} className="text-2xl focus:outline-none">
                             {menuOpen ? <HiX /> : <HiMenu />}
                         </button>
@@ -44,8 +46,8 @@ export default function Navbar() {
                 <div className="hidden md:flex justify-between items-center h-14">
                     <div className="flex items-center space-x-6   p-1 rounded-full">
                         <Link
-                            href="/home"
-                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/home" ? "bg-white shadow text-black" : "text-gray-600 hover:text-black"
+                            href="/"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/" ? "bg-white shadow text-black" : "text-gray-600 hover:text-black"
                                 }`}
                         >
                             Home
@@ -72,7 +74,7 @@ export default function Navbar() {
                             className="border rounded-full shadow-lg px-3 py-1.5 text-sm outline-none focus:ring-2 focus:ring-gray-300"
                         />
                         <PiShoppingCartBold className="text-2xl cursor-pointer hover:text-gray-500 transition" />
-                        <FaUserAlt className="text-xl cursor-pointer hover:text-gray-500 transition" />
+                        <FaUserAlt onClick={() => setIsAuthModalOpen(true)} className="text-xl cursor-pointer hover:text-gray-500 transition" />
                     </div>
                 </div>
 
@@ -84,12 +86,13 @@ export default function Navbar() {
                             placeholder="Search..."
                             className="border rounded-full px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-gray-300 w-full"
                         />
-                        <Link href="/home" className={`py-1 transition-colors ${pathname === "/home" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Home</Link>
+                        <Link href="/" className={`py-1 transition-colors ${pathname === "/" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Home</Link>
                         <Link href="/shop" className={`py-1 transition-colors ${pathname === "/shop" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
                         <Link href="/contact" className={`py-1 transition-colors ${pathname === "/contact" ? "text-black font-bold" : "text-gray-700 hover:text-black"}`} onClick={() => setMenuOpen(false)}>Contact</Link>
                     </div>
                 )}
             </div>
+            <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
         </nav>
     );
 }

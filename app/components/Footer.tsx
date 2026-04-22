@@ -3,7 +3,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-
+import Link from "next/link";
 export default function Footer() {
     return (
 
@@ -40,10 +40,11 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold mb-3">HELP</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-gray-500">Customer Support</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Delivery Details</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Terms & Conditions</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Privacy Policy</a></li>
+                        <li><Link href="/contact" className="hover:text-gray-500">Customer Support</Link></li>
+                        <li><Link href="/ShippingPolicy" className="hover:text-gray-500">Shipping Policy</Link></li>
+                        <li><Link href="/RefundPolicy" className="hover:text-gray-500">Refund Policy</Link></li>
+                        <li><Link href="/Terms&Contitions" className="hover:text-gray-500">Terms & Conditions</Link></li>
+                        <li><Link href="/PrivacyPolicy" className="hover:text-gray-500">Privacy Policy</Link></li>
                     </ul>
                 </div>
                 <div>
