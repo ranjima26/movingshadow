@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Mail, Lock, User as UserIcon, LogIn } from "lucide-react";
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
+import { signIn } from "next-auth/react";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -31,15 +32,59 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setError("");
     setLoading(true);
 
-    // Mock loading state for UI demonstration
-    setTimeout(() => {
+    try {
+      if (isLogin) {
+        // Login Logic
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (result?.error) {
+          setError("Invalid email or password");
+          setLoading(false);
+        } else {
+          onClose();
+          window.location.reload(); // Refresh to update session state
+        }
+      } else {
+        // Signup Logic
+        const res = await fetch("/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Something went wrong");
+        }
+
+        // Auto login after signup
+        const result = await signIn("credentials", {
+          redirect: false,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (result?.ok) {
+          onClose();
+          window.location.reload();
+        } else {
+          setIsLogin(true); // Switch to login if auto-login fails
+          setLoading(false);
+        }
+      }
+    } catch (err: any) {
+      setError(err.message);
       setLoading(false);
-      onClose(); // Automatically closes after simulated loading
-    }, 1500);
+    }
   };
 
   const handleGoogleSignIn = async () => {
-    // Mock Google Sign In for UI demonstration
+    await signIn("google", { callbackUrl: "/" });
     onClose();
   };
 
