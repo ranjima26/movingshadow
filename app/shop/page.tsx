@@ -1,3 +1,4 @@
+import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { MdOutlineEmail } from "react-icons/md";
 
@@ -27,7 +28,9 @@ export default function Shop() {
         </div>
       </section>
 
-      <FilterBar />
+      <div id="categories">
+        <FilterBar />
+      </div>
 
 
       <div className="bg-white mt-10">
@@ -189,10 +192,11 @@ export default function Shop() {
             <p className="text-sm text-gray-200 mb-6">
               Clearance of the previous collection. One time only.
             </p>
-
-            <button className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition">
-              Shop Now
-            </button>
+ 
+              <Link href="#categories" className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition inline-block">
+                Shop Now
+              </Link>
+            
           </div>
 
         </div>

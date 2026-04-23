@@ -8,11 +8,11 @@ export default function Footer() {
     return (
 
         <footer className="bg-gray-100 text-black-300 px-6 py-10">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-6 gap-8">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
 
 
                 <div className="md:col-span-2">
-                   
+
                     <img height={200} width={200} src="/assets/banners/logo.png" alt="" />
                     <p className="mt-2 text-sm text-gray-500">we have clothes that suit your <br />
                         style and which you're proud to <br />
@@ -26,14 +26,13 @@ export default function Footer() {
                     </div>
                 </div>
 
-               
+
                 <div className="">
                     <h3 className="font-semibold mb-3">COMPANY</h3>
                     <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-gray-500">About</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Features</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Work</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Career</a></li>
+                        <li><Link href="/shop" className="hover:text-gray-500">Shop</Link></li>
+                        <li><Link href="/contact" className="hover:text-gray-500">Contact</Link></li>
+
                     </ul>
 
                 </div>
@@ -47,15 +46,7 @@ export default function Footer() {
                         <li><Link href="/PrivacyPolicy" className="hover:text-gray-500">Privacy Policy</Link></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 className="font-semibold mb-3">FAQ</h3>
-                    <ul className="space-y-2 text-sm">
-                        <li><a href="#" className="hover:text-gray-500">Account</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Manage Deliveries</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Orders</a></li>
-                        <li><a href="#" className="hover:text-gray-500">Payment</a></li>
-                    </ul>
-                </div>
+
                 <div>
                     <h3 className="font-semibold mb-3">RESOURCES</h3>
                     <ul className="space-y-2 text-sm">

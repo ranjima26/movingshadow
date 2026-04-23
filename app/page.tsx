@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import Link from "next/link";
 export default function Home() {
   return (
     <div className="w-full max-w-6xl mx-auto mt-4">
@@ -30,9 +31,12 @@ export default function Home() {
               <div className="text-right max-w-sm">
                 <h2 className="text-3xl md:text-5xl font-bold">Flat 70% Sale</h2>
                 <p className="mt-4 text-lg">Limited drop.Maximum impact.</p>
+                <Link href="/shop">
                 <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
                   Shop Now
                 </button>
+                </Link>
+                
               </div>
             </div>
           </div>
@@ -50,9 +54,11 @@ export default function Home() {
               <div className="text-left max-w-sm">
                 <h2 className="text-3xl md:text-5xl font-bold">The New Uniform</h2>
                 <p className="mt-4 text-lg">Clean shilhouettes.No excess.</p>
-                <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
-                  Explore
-                </button>
+                <Link href="/shop">
+                  <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
+                    Explore
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -70,16 +76,18 @@ export default function Home() {
               <div className="text-right max-w-sm">
                 <h2 className="text-3xl md:text-5xl font-bold">Built For Presence</h2>
                 <p className="mt-4 text-lg">Elevated basics for daily Rotation.</p>
-                <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
-                  Shop Now
-                </button>
+                <Link href="/shop">
+                  <button className="mt-6 px-6 py-3 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition">
+                    Shop Now
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
         </SwiperSlide>
       </Swiper>
       <div className="">
-        <h2 className="text-3xl text-black font-bold text-center mt-8">Shop By Category</h2>
+        <h2 className="text-3xl text-black font-bold text-center mt-8">Explore Our Collection</h2>
         <p className="text-center mt-3">Limited drop.Maximum impact.</p>
 
       </div>

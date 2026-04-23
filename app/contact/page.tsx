@@ -246,7 +246,7 @@ export default function Contact() {
                                 className="pl-9 pr-4 py-2 rounded-full bg-gray-100 text-sm outline-none w-full md:w-72"
                             />
                         </div>
-                        <button className="bg-white text-gray-800 text-sm font-medium py-2 rounded-full hover:bg-gray-200 transition">
+                        <button className="bg-white text-gray-800 text-sm font-medium py-2 rounded-full hover:bg-gray-300 transition">
                             Subscribe to Newsletter
                         </button>
                     </div>
