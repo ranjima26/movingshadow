@@ -1,17 +1,54 @@
+"use client";
 
+import { useState, ChangeEvent, FormEvent } from "react";
 import { CiShare2 } from "react-icons/ci";
 import { CiCamera } from "react-icons/ci";
 import { BsFilePlay } from "react-icons/bs";
 import { MdOutlineEmail } from "react-icons/md";
 
+const initialForm = { name: "", email: "", phone: "", subject: "", message: "" };
+
 export default function Contact() {
+    const [form, setForm] = useState(initialForm);
+    const [status, setStatus] = useState<"loading" | "success" | "error" | null>(null);
+    const [errorMsg, setErrorMsg] = useState("");
+
+    function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    }
+
+    async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setStatus("loading");
+        setErrorMsg("");
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(form),
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                setErrorMsg(data.error || "Something went wrong.");
+                setStatus("error");
+            } else {
+                setStatus("success");
+                setForm(initialForm);
+            }
+        } catch (err) {
+            setErrorMsg("Network error. Please try again.");
+            setStatus("error");
+        }
+    }
+
     return (
         <section className="bg-gray-50 pb-20">
 
-           
             <div className="max-w-6xl mx-auto px-6 py-12 md:py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
 
-                
+                {/* Left — Info */}
                 <div>
                     <h1 className="text-4xl md:text-5xl text-black font-bold">Contact Us</h1>
                     <p className="mb-8 mt-4 text-gray-500 text-sm md:text-base">
@@ -60,33 +97,90 @@ export default function Contact() {
                     </div>
                 </div>
 
-
+                {/* Right — Form */}
                 <div className="bg-white shadow-xl rounded-3xl p-6 md:p-8 mt-8 lg:mt-0">
                     <h2 className="text-xl font-bold text-gray-800 mb-6">Send a Message</h2>
-                    <form className="space-y-5">
+
+                    {status === "success" && (
+                        <div className="mb-5 px-4 py-3 rounded-2xl bg-green-50 border border-green-200 text-green-700 text-sm">
+                            ✓ Your message was sent! We'll get back to you soon.
+                        </div>
+                    )}
+                    {status === "error" && (
+                        <div className="mb-5 px-4 py-3 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                            ✕ {errorMsg}
+                        </div>
+                    )}
+
+                    <form className="space-y-5" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label className="text-xs text-gray-500 font-medium">Name</label>
-                                <input type="text" placeholder="John Doe" className="w-full mt-2 px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm" />
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={form.name}
+                                    onChange={handleChange}
+                                    placeholder="John Doe"
+                                    className="w-full mt-2 text-black px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm"
+                                />
                             </div>
                             <div>
                                 <label className="text-xs text-gray-500 font-medium">Email</label>
-                                <input type="email" placeholder="john@example.com" className="w-full mt-2 px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm" />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={form.email}
+                                    onChange={handleChange}
+                                    placeholder="john@example.com"
+                                    className="w-full mt-2 text-black px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm"
+                                />
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label className="text-xs text-gray-500 font-medium">Phone</label>
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={form.phone}
+                                    onChange={handleChange}
+                                    placeholder="+1 (555) 000-0000"
+                                    className="w-full mt-2 text-black px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-xs text-gray-500 font-medium">Subject</label>
+                                <input
+                                    type="text"
+                                    name="subject"
+                                    value={form.subject}
+                                    onChange={handleChange}
+                                    placeholder="Inquiry about current collection"
+                                    className="w-full mt-2 text-black px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm"
+                                />
                             </div>
                         </div>
                         <div>
-                            <label className="text-xs text-gray-500 font-medium">Subject</label>
-                            <input type="text" placeholder="Inquiry about current collection" className="w-full mt-2 px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm" />
-                        </div>
-                        <div>
-                            <label className="text-xs text-gray-500 font-medium">Message</label>
-                            <textarea placeholder="Your message here...." rows={5} className="w-full mt-2 px-5 py-4 rounded-3xl bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition resize-none text-sm"></textarea>
+                            <label className="text-xs text-gray-500 font-medium">
+                                Message <span className="text-red-400">*</span>
+                            </label>
+                            <textarea
+                                name="message"
+                                value={form.message}
+                                onChange={handleChange}
+                                placeholder="Your message here...."
+                                rows={5}
+                                required
+                                className="w-full mt-2 text-black px-5 py-4 rounded-3xl bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition resize-none text-sm"
+                            ></textarea>
                         </div>
                         <button
                             type="submit"
-                            className="w-full sm:w-auto px-8 py-3 rounded-full bg-gray-800 hover:bg-black transition text-xs text-white font-bold tracking-wide"
+                            disabled={status === "loading"}
+                            className="w-full sm:w-auto px-8 py-3 rounded-full bg-gray-800 hover:bg-black transition text-xs text-white font-bold tracking-wide disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                            SEND MESSAGE →
+                            {status === "loading" ? "SENDING..." : "SEND MESSAGE →"}
                         </button>
                     </form>
                 </div>
@@ -137,29 +231,28 @@ export default function Contact() {
                 </div>
             </section>
 
-           
-           <section className="w-full px-4 mt-10">
-        <div className="max-w-4xl mx-auto bg-gray-800 rounded-2xl px-6 py-6 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold text-center md:text-left leading-tight">
-            STAY UP TO DATE ABOUT <br className="hidden md:block" />
-            OUR LATEST OFFERS
-          </h2>
-          <div className="flex flex-col gap-3 w-full md:w-auto">
-            <div className="relative">
-              <MdOutlineEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="pl-9 pr-4 py-2 rounded-full bg-gray-100 text-sm outline-none w-full md:w-72"
-              />
-            </div>
-            <button className="bg-white text-gray-800 text-sm font-medium py-2 rounded-full hover:bg-gray-200 transition">
-              Subscribe to Newsletter
-            </button>
-          </div>
-        </div>
-      </section>
+            <section className="w-full px-4 mt-10">
+                <div className="max-w-4xl mx-auto bg-gray-800 rounded-2xl px-6 py-6 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold text-center md:text-left leading-tight">
+                        STAY UP TO DATE ABOUT <br className="hidden md:block" />
+                        OUR LATEST OFFERS
+                    </h2>
+                    <div className="flex flex-col gap-3 w-full md:w-auto">
+                        <div className="relative">
+                            <MdOutlineEmail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                            <input
+                                type="email"
+                                placeholder="Enter your email address"
+                                className="pl-9 pr-4 py-2 rounded-full bg-gray-100 text-sm outline-none w-full md:w-72"
+                            />
+                        </div>
+                        <button className="bg-white text-gray-800 text-sm font-medium py-2 rounded-full hover:bg-gray-200 transition">
+                            Subscribe to Newsletter
+                        </button>
+                    </div>
+                </div>
+            </section>
 
         </section>
-    )
+    );
 }
