@@ -1,13 +1,44 @@
 import Link from "next/link";
 import FilterBar from "../components/FilterBar";
 import { MdOutlineEmail } from "react-icons/md";
+import connectDB from "@/lib/db";
+import Product from "@/app/models/Product";
+import ProductCard from "../components/ProductCard";
 
-export default function Shop() {
+export const revalidate = 0; // Disable caching for the shop page so filters work in real-time
+
+export default async function Shop({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>
+}) {
+  const resolvedSearchParams = await searchParams;
+  const category = resolvedSearchParams.category || "All";
+  const sortBy = resolvedSearchParams.sort || "Newest First";
+
+  await connectDB();
+
+  // Build MongoDB query
+  const query: any = {};
+  if (category !== "All") {
+    query.category = category;
+  }
+
+  // Build sorting option
+  let sortOption: any = { createdAt: -1 }; // Newest First default
+  if (sortBy === "Price: Low to High") {
+    sortOption = { price: 1 };
+  } else if (sortBy === "Price: High to Low") {
+    sortOption = { price: -1 };
+  }
+
+  // Fetch from DB
+  const products = await Product.find(query).sort(sortOption).lean();
+  const serializedProducts = JSON.parse(JSON.stringify(products));
+
   return (
     <>
-
       <section className="w-full max-w-4xl mx-auto rounded-3xl overflow-hidden mt-4 relative">
-
         <img
           src="/assets/banners/shop1.png"
           alt=""
@@ -16,11 +47,9 @@ export default function Shop() {
 
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-6">
           <h5 className="text-sm md:text-base">Season 2024</h5>
-
           <h1 className="text-3xl md:text-5xl font-bold mt-2">
             New Arrivals
           </h1>
-
           <p className="mt-3 text-sm md:text-base">
             Freshly dropped. Limited stock designed for the <br />
             moving spirit.
@@ -32,163 +61,43 @@ export default function Shop() {
         <FilterBar />
       </div>
 
-
       <div className="bg-white mt-10">
         <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-5xl lg:px-8">
+          
+          {serializedProducts.length > 0 ? (
+            <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+              {serializedProducts.map((product: any) => (
+                <ProductCard 
+                  key={product._id} 
+                  id={product._id} 
+                  name={product.name} 
+                  description={product.description} 
+                  price={product.price} 
+                  imageUrl={product.imageUrl} 
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <h2 className="text-2xl font-semibold text-gray-700">No products found</h2>
+              <p className="text-gray-500 mt-2">Try adjusting your filters to see more results.</p>
+            </div>
+          )}
 
-
-          <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            <div className="group relative">
-              <img src="/assets/banners/Background-1.png" alt="Front of men's Basic Tee in black." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Essential Polo
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">Organic Cotton</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹3,499</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="/assets/banners/Background-3.png" alt="Front of men's Basic Tee in white." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Oversized Hoodie
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">arench Terry</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹5,999</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="assets/banners/Background-2.png" alt="Front of men's Basic Tee in dark gray." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Straight Denim
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">selvedge ainish</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹7,499</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="assets/banners/shop2.png" alt="Front of men's Artwork Tee in peach." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Linene Utility Jacket
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">Natural aiber</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹8,999</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
-      <div className="bg-white ">
-        <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-5xl lg:px-8">
-
-
-          <div className=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-            <div className="group relative">
-              <img src="/assets/banners/Background-1.png" alt="Front of men's Basic Tee in black." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Essential Polo
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">Organic Cotton</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹3,499</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="/assets/banners/Background-3.png" alt="Front of men's Basic Tee in white." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Oversized Hoodie
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">arench Terry</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹5,999</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="assets/banners/Background-2.png" alt="Front of men's Basic Tee in dark gray." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Straight Denim
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">selvedge ainish</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹7,499</p>
-              </div>
-            </div>
-            <div className="group relative">
-              <img src="assets/banners/shop2.png" alt="Front of men's Artwork Tee in peach." />
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-gray-700">
-                    <a href="#">
-                      <span aria-hidden="true" className="absolute inset-0"></span>
-                      Linene Utility Jacket
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm text-gray-500">Natural aiber</p>
-                </div>
-                <p className="text-sm font-medium text-gray-900">₹8,999</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
 
       <div className="w-full max-w-4xl mx-auto mt-6">
         <div className="relative rounded-3xl overflow-hidden p-10 md:p-14 text-white">
-
-
           <div className="absolute inset-0">
             <div className="w-full h-full bg-gradient-to-r from-gray-800 via-yellow-700 to-black opacity-90"></div>
-
-
             <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.15)_25%,transparent_25%,transparent_50%,rgba(255,255,255,0.15)_50%,rgba(255,255,255,0.15)_75%,transparent_75%,transparent)] bg-[length:40px_40px] opacity-20"></div>
           </div>
-
 
           <div className="relative z-10 max-w-md">
             <h1 className="text-3xl md:text-4xl font-bold mb-3">
               Flat 70% Sale
             </h1>
-
             <p className="text-sm text-gray-200 mb-6">
               Clearance of the previous collection. One time only.
             </p>
@@ -198,7 +107,6 @@ export default function Shop() {
               </Link>
             
           </div>
-
         </div>
       </div>
 

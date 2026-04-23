@@ -132,6 +132,7 @@ export default function Contact() {
                                     name="email"
                                     value={form.email}
                                     onChange={handleChange}
+                                    required
                                     placeholder="john@example.com"
                                     className="w-full mt-2 text-black px-5 py-3 rounded-full bg-gray-100 outline-none focus:ring-2 focus:ring-gray-300 transition text-sm"
                                 />
