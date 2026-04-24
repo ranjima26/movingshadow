@@ -4,26 +4,31 @@ import { motion } from "motion/react";
 
 export default function PrivacyPolicy() {
     return (
-        <><div className="flex justify-center py-10 md:py-20 overflow-hidden">
-            <h1 className="text-black text-4xl sm:text-5xl md:text-7xl font-bold text-center flex gap-2 md:gap-4">
+        <>
+            <div className="flex justify-center pt-32 md:pt-48 pb-10 md:pb-20">
+            <h1 className="text-black text-4xl sm:text-5xl md:text-7xl font-bold text-center flex items-center justify-center gap-3 md:gap-5">
                 <motion.span
-                    initial={{ x: -100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="inline-block"
+                    initial={{ x: -50, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 >
                     Privacy
                 </motion.span>
                 <motion.span
-                    initial={{ x: 100, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="inline-block"
+                    initial={{ x: 50, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 >
                     Policy
                 </motion.span>
             </h1>
         </div>
 
-            <div className="max-w-4xl mx-auto px-4 md:px-6 pb-20">
+            <div className="max-w-4xl mx-auto px-4 md:px-6 pb-20 mt-0">
                 <p className="text-gray-500 text-lg md:text-xl leading-relaxed text-left mb-10 md:mb-16 font-normal">
                     Welcome to Movingshadow.com, owned and operated by Moving Shadow. This Privacy Policy explains how we collect, use, disclose, and protect your information when you visit our website Movingshadow.com.
                 </p>
