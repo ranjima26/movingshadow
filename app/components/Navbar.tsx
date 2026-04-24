@@ -87,7 +87,9 @@ export default function Navbar() {
                             />
                         </div>
                         <div className="flex items-center space-x-5 ml-4">
-                            <PiShoppingCartBold className="text-2xl cursor-pointer hover:text-gray-500 transition" />
+                            <Link href="/cart">
+                                <PiShoppingCartBold className="text-2xl cursor-pointer hover:text-gray-500 transition" />
+                            </Link>
                             {session ? (
                                 <div className="flex items-center gap-4">
                                     <span className="text-sm font-medium text-gray-700 hidden lg:inline">Hello, {session.user?.name?.split(' ')[0]}</span>
