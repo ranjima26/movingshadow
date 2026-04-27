@@ -8,8 +8,7 @@ import {
     MdLogout, 
     MdEdit,
     MdEmail,
-    MdPhone,
-    MdCalendarToday,
+ 
     MdArrowForwardIos
 } from "react-icons/md";
 import { motion } from "motion/react";
@@ -19,9 +18,9 @@ export default function Profile() {
 
     const user = {
         name: "John Doe",
-        email: "john.doe@example.com",
+        email: "johndoe@example.com",
         phone: "+91 98765 43210",
-        joinDate: "January 2024",
+        
         orders: 12,
         address: "Kochi, Kerala, India"
     };
@@ -51,19 +50,9 @@ export default function Profile() {
                             <h1 className="text-3xl font-black text-gray-900">{user.name}</h1>
                             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-500 text-sm font-medium">
                                 <span className="flex items-center gap-1"><MdEmail /> {user.email}</span>
-                                <span className="flex items-center gap-1"><MdCalendarToday /> Joined {user.joinDate}</span>
                             </div>
                             
-                            <div className="flex gap-4 pt-4 justify-center md:justify-start">
-                                <div className="bg-gray-100 px-4 py-2 rounded-2xl">
-                                    <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Total Orders</p>
-                                    <p className="text-xl font-black text-gray-800">{user.orders}</p>
-                                </div>
-                                <div className="bg-gray-100 px-4 py-2 rounded-2xl">
-                                    <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Member Points</p>
-                                    <p className="text-xl font-black text-gray-800">450</p>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -98,17 +87,7 @@ export default function Profile() {
                                     <MdArrowForwardIos className="text-xs" />
                                 </button>
 
-                                <button 
-                                    onClick={() => setActiveTab("address")}
-                                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${activeTab === 'address' ? 'bg-black text-white shadow-lg' : 'text-gray-600 hover:bg-gray-50'}`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <MdLocationOn className="text-xl" />
-                                        <span className="font-bold">Addresses</span>
-                                    </div>
-                                    <MdArrowForwardIos className="text-xs" />
-                                </button>
-
+                              
 
 
                                 <div className="pt-4 mt-4 border-t border-gray-100">

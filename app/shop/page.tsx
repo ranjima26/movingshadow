@@ -4,6 +4,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import connectDB from "@/lib/db";
 import Product from "@/app/models/Product";
 import ProductCard from "../components/ProductCard";
+import { section } from "motion/react-client";
 
 export const revalidate = 0; // Disable caching for the shop page so filters work in real-time
 
