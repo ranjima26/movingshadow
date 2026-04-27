@@ -16,6 +16,7 @@ export default async function Shop({
   const resolvedSearchParams = await searchParams;
   const category = resolvedSearchParams.category || "All";
   const sortBy = resolvedSearchParams.sort || "Newest First";
+  const search = resolvedSearchParams.search || "";
 
   await connectDB();
 
@@ -23,6 +24,10 @@ export default async function Shop({
   const query: any = {};
   if (category !== "All") {
     query.category = category;
+  }
+
+  if (search) {
+    query.name = { $regex: search, $options: "i" };
   }
 
   // Build sorting option

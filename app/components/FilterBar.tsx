@@ -16,6 +16,12 @@ function FilterBarContent() {
 
   const updateFilters = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams.toString());
+    
+    // Clear search when changing category to show all products in that category
+    if (key === "category") {
+      params.delete("search");
+    }
+    
     params.set(key, value);
     // If we change category, we probably want to stay on page 1 (if pagination existed)
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -50,7 +56,7 @@ function FilterBarContent() {
               value={sortBy}
               onChange={(e) => updateFilters("sort", e.target.value)}
             >
-              <option value="Newest First">Newest First</option>
+            
               <option value="Price: Low to High">Price: Low to High</option>
               <option value="Price: High to Low">Price: High to Low</option>
             </select>

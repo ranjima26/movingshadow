@@ -5,15 +5,31 @@ import { useState } from "react";
 import { PiShoppingCartBold } from "react-icons/pi";
 import { FaUserAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { AuthModal } from "./AuthModal";
+import { useCart } from "../context/CartContext";
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const pathname = usePathname();
+    const router = useRouter();
     const { data: session } = useSession();
+    const { setIsCartOpen } = useCart();
+
+    // search function
+
+    const handleSearch = (e: React.FormEvent | React.KeyboardEvent) => {
+        if ('key' in e && e.key !== 'Enter') return;
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            router.push(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+            setSearchQuery("");
+            setMenuOpen(false);
+        }
+    };
 
     return (
         <nav className="w-full bg-white shadow-sm sticky top-0 z-50">
@@ -29,7 +45,10 @@ export default function Navbar() {
                         />
                     </Link>
                     <div className="flex items-center space-x-3">
-                        <PiShoppingCartBold className="text-2xl cursor-pointer" />
+                        <PiShoppingCartBold 
+                            className="text-2xl cursor-pointer" 
+                            onClick={() => setIsCartOpen(true)}
+                        />
                         {session ? (
                             <div className="flex items-center space-x-3">
                                 <Link href="/profile" className="text-xl cursor-pointer">
@@ -84,17 +103,19 @@ export default function Navbar() {
                         </Link>
                     </div>
                     <div className="flex items-center space-x-4">
-                        <div className="relative group">
+                        <form onSubmit={handleSearch} className="relative group">
                             <input
                                 type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search..."
                                 className="border border-gray-200 rounded-full px-4 py-1.5 text-sm outline-none focus:ring-2 focus:ring-gray-900/5 focus:border-gray-900 transition-all w-48 group-hover:w-64"
                             />
-                        </div>
+                        </form>
                         <div className="flex items-center space-x-5 ml-4">
-                            <Link href="/cart">
+                            <button onClick={() => setIsCartOpen(true)}>
                                 <PiShoppingCartBold className="text-2xl cursor-pointer hover:text-gray-500 transition" />
-                            </Link>
+                            </button>
                             {session ? (
                                 <div className="flex items-center gap-4">
                                     <Link href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-black transition">
@@ -116,13 +137,15 @@ export default function Navbar() {
 
                 {menuOpen && (
                     <div className="md:hidden flex flex-col space-y-3 pb-6 pt-2 border-t border-gray-100">
-                        <div className="px-1">
+                        <form onSubmit={handleSearch} className="px-1">
                             <input
                                 type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
                                 placeholder="Search products..."
                                 className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gray-900/5 focus:border-gray-900 w-full bg-gray-50"
                             />
-                        </div>
+                        </form>
                         <Link href="/" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Home</Link>
                         <Link href="/shop" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/shop" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
                         <Link href="/contact" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/contact" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Contact</Link>

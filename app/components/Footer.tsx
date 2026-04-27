@@ -62,7 +62,7 @@ export default function Footer() {
                 <p className="text-sm">Shop.co © 2000–2023, All Rights Reserved</p>
                 <div className="flex space-x-4 mt-4 md:mt-0">
                     <span className="bg-white text-black px-2 py-1 rounded"><img src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png" width={40} height={40} alt="" /></span>
-                    <span className="bg-white text-black px-2 py-1 rounded"><img src="https://pngimg.com/d/paypal_PNG1.png" width={40} height={40} alt="" /></span>
+                    <span className="bg-white text-black px-2 py-1 rounded"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStvSnMcJDx83tQA7kuieYu-ejhgH12ogtfdw&s" width={40} height={40} alt="" /></span>
 
                     <span className="bg-white text-black px-2 py-1 rounded"><img src="https://1000logos.net/wp-content/uploads/2023/03/Apple-Pay-logo.png" width={40} height={40} alt="" /></span>
 

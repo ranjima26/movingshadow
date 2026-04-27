@@ -86,7 +86,7 @@ export default function CartDrawer() {
                                     <button
                                       type="button"
                                       onClick={() => removeFromCart(product._id)}
-                                      className="font-medium text-red-600 hover:text-indigo-500"
+                                      className="font-medium text-red-600 hover:text-red-500"
                                     >
                                       Remove
                                     </button>
@@ -125,7 +125,7 @@ export default function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => setIsCartOpen(false)}
-                          className="font-medium text-gray-600 hover:text-indigo-500"
+                          className="font-medium text-gray-600 hover:text-gray-800"
                         >
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>
