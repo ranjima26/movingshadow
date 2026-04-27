@@ -58,21 +58,21 @@ export default function Navbar() {
                     <div className="flex items-center space-x-6">
                         <Link
                             href="/"
-                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/" ? "bg-gray-900 text-white shadow-lg" : "text-gray-600 hover:text-black"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/" ? "bg-white text-gray-900 border border-white shadow-sm" : "text-gray-600 hover:text-black"
                                 }`}
                         >
                             Home
                         </Link>
                         <Link
                             href="/shop"
-                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/shop" ? "bg-gray-900 text-white shadow-lg" : "text-gray-600 hover:text-black"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/shop" ? "bg-white text-gray-900 border border-white shadow-sm" : "text-gray-600 hover:text-black"
                                 }`}
                         >
                             Shop
                         </Link>
                         <Link
                             href="/contact"
-                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/contact" ? "bg-gray-900 text-white shadow-lg" : "text-gray-600 hover:text-black"
+                            className={`px-4 py-1.5 rounded-full transition-all duration-300 ${pathname === "/contact" ? "bg-white text-gray-900 border border-white shadow-sm" : "text-gray-600 hover:text-black"
                                 }`}
                         >
                             Contact
@@ -115,9 +115,9 @@ export default function Navbar() {
                                 className="border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-gray-900/5 focus:border-gray-900 w-full bg-gray-50"
                             />
                         </div>
-                        <Link href="/" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/" ? "bg-gray-900 text-white font-medium" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Home</Link>
-                        <Link href="/shop" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/shop" ? "bg-gray-900 text-white font-medium" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
-                        <Link href="/contact" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/contact" ? "bg-gray-900 text-white font-medium" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Contact</Link>
+                        <Link href="/" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Home</Link>
+                        <Link href="/shop" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/shop" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
+                        <Link href="/contact" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/contact" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Contact</Link>
                         {session ? (
                              <button onClick={() => { signOut(); setMenuOpen(false); }} className="px-2 py-2 text-left text-red-600 font-medium hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2">
                                 <FaSignOutAlt /> Logout

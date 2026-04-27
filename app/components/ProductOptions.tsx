@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { motion } from "motion/react";
+import { useRouter } from "next/navigation";
 
 interface ProductOptionsProps {
   productData: any;
@@ -13,6 +14,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function ProductOptions({ productData }: ProductOptionsProps) {
+  const router = useRouter();
   const [selectedColor, setSelectedColor] = useState(productData.colors[0]);
   const [selectedSize, setSelectedSize] = useState(productData.sizes[2]); // Default to M or similar
   const { addToCart } = useCart();
@@ -97,6 +99,7 @@ export default function ProductOptions({ productData }: ProductOptionsProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="button"
+            onClick={() => router.push('/buynow')}
             className="flex w-full items-center justify-center rounded-xl border border-gray-200 bg-white px-8 py-3.5 text-base font-bold text-gray-900 hover:bg-gray-50 transition-all"
           >
             Buy Now

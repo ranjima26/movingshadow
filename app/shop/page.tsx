@@ -101,9 +101,11 @@ export default async function Shop({
             <p className="text-sm text-gray-200 mb-6">
               Clearance of the previous collection. One time only.
             </p>
- 
-              <Link href="#categories" className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition inline-block">
-                Shop Now
+              <Link 
+                href="#categories" 
+                className="bg-white text-black px-6 py-2 rounded-full font-medium hover:bg-gray-200 transition inline-block relative z-20 cursor-pointer"
+              >
+               Shop Now
               </Link>
             
           </div>

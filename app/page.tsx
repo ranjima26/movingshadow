@@ -4,6 +4,8 @@ import Product from "@/app/models/Product";
 import BannerCarousel from "./components/BannerCarousel";
 import ProductCard from "./components/ProductCard";
 
+import SecondaryBanners from "./components/SecondaryBanners";
+
 export const revalidate = 0; // Disable caching to always show latest products on home page
 
 async function getNewArrivals() {
@@ -21,59 +23,56 @@ export default async function Home() {
   const newArrivals = await getNewArrivals();
 
   return (
-    <div className="w-full max-w-6xl mx-auto mt-4">
-      <BannerCarousel />
-      
-      <div className="">
-        <h2 className="text-3xl text-black font-bold text-center mt-8">Explore Our Collection</h2>
-        <p className="text-center mt-3">Limited drop.Maximum impact.</p>
-      </div>
-
-      <section>
-        <div>
-          <img src="/assets/banners/Group-72.png" alt="" />
+    <div className="w-full mt-4">
+      {/* Centered Top Content */}
+      <div className="max-w-6xl mx-auto px-4">
+        <BannerCarousel />
+        
+        <div className="">
+          <h2 className="text-3xl text-black font-bold text-center mt-8">Explore Our Collection</h2>
+          <p className="text-center mt-3">Limited drop.Maximum impact.</p>
         </div>
-      </section>
 
-      <section>
-        <div>
-          <img src="/assets/banners/section-2.png" alt="" />
+        <SecondaryBanners />
+
+        <div className="text-center">
+          <h1 className="text-3xl text-black font-bold text-center mt-8">New Arrivals</h1>
+          <p className="mt-3">Freshly droped.Limited Stock.</p>
         </div>
-      </section>
 
-      <section className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div>
-          <img src="/assets/banners/0fferbanner.png" alt="Offer Banner" className="w-full" />
-        </div>
-      </section>
-
-      <div className="text-center">
-        <h1 className="text-3xl text-black font-bold text-center mt-8">New Arrivals</h1>
-        <p className="mt-3">Freshly droped.Limited Stock.</p>
-      </div>
-
-      <div className="bg-white">
-        <div className="mx-auto max-w-2xl px-4 py-6 sm:px-6 sm:py-8 lg:max-w-7xl lg:px-8">
-          {newArrivals.length > 0 ? (
-            <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-              {newArrivals.map((product: any) => (
-                <ProductCard 
-                  key={product._id} 
-                  id={product._id} 
-                  name={product.name} 
-                  description={product.description} 
-                  price={product.price} 
-                  imageUrl={product.imageUrl} 
-                />
-              ))}
-            </div>
-          ) : (
-             <p className="text-center text-gray-500 w-full py-10 col-span-full">No new arrivals found. Please seed the database.</p>
-          )}
+        <div className="bg-white">
+          <div className="mx-auto max-w-2xl py-6 sm:py-8 lg:max-w-7xl">
+            {newArrivals.length > 0 ? (
+              <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+                {newArrivals.map((product: any) => (
+                  <ProductCard 
+                    key={product._id} 
+                    id={product._id} 
+                    name={product.name} 
+                    description={product.description} 
+                    price={product.price} 
+                    imageUrl={product.imageUrl} 
+                  />
+                ))}
+              </div>
+            ) : (
+               <p className="text-center text-gray-500 w-full py-10 col-span-full">No new arrivals found. Please seed the database.</p>
+            )}
+          </div>
         </div>
       </div>
 
-      <section className="w-full px-4 mt-10">
+      {/* Truly Full-width Static Offer Banner */}
+      <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-14 overflow-hidden">
+        <img 
+          src="/assets/banners/0fferbanner.png" 
+          alt="Exclusive Offer" 
+          className="w-full h-auto object-cover block" 
+        />
+      </div>
+
+      {/* Newsletter Section */}
+      <section className="w-full px-4 mt-10 mb-10">
         <div className="max-w-4xl mx-auto bg-gray-800 rounded-2xl px-6 py-6 md:px-10 md:py-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold text-center md:text-left leading-tight">
             STAY UP TO DATE ABOUT <br className="hidden md:block" />
