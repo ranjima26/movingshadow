@@ -92,14 +92,17 @@ export default function ProductOptions({ productData }: ProductOptionsProps) {
             onClick={handleAddToBag}
             className="flex w-full items-center justify-center rounded-xl border border-transparent bg-gray-900 px-8 py-3.5 text-base font-bold text-white hover:bg-black transition-all shadow-lg"
           >
-            Add to bag
+            Add to Cart
           </motion.button>
           
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="button"
-            onClick={() => router.push('/buynow')}
+            onClick={() => {
+              addToCart(productData, 1, selectedColor.name, selectedSize.name);
+              router.push('/buynow');
+            }}
             className="flex w-full items-center justify-center rounded-xl border border-gray-200 bg-white px-8 py-3.5 text-base font-bold text-gray-900 hover:bg-gray-50 transition-all"
           >
             Buy Now

@@ -215,7 +215,7 @@ export default function Example() {
                                     type="button"
                                     className="flex w-full items-center justify-center rounded-md border border-black bg-white px-8 py-3 text-base font-medium text-black hover:bg-gray-100 focus:outline-none"
                                 >
-                                    Add to bag
+                                    Add to Cart
                                 </button>
                                 {/* Buy Now: Bold Green style */}
                                 <button

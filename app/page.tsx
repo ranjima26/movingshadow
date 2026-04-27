@@ -1,10 +1,10 @@
 import { MdOutlineEmail } from "react-icons/md";
 import connectDB from "@/lib/db";
 import Product from "@/app/models/Product";
-import BannerCarousel from "./components/BannerCarousel";
-import ProductCard from "./components/ProductCard";
+import BannerCarousel from "@/app/components/BannerCarousel";
+import ProductCard from "@/app/components/ProductCard";
 
-import SecondaryBanners from "./components/SecondaryBanners";
+import SecondaryBanners from "@/app/components/SecondaryBanners";
 
 export const revalidate = 0; // Disable caching to always show latest products on home page
 
