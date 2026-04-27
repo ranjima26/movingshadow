@@ -55,7 +55,7 @@ export default function CartDrawer() {
                             <p className="text-gray-500">Your cart is empty</p>
                             <button 
                               onClick={() => setIsCartOpen(false)}
-                              className="mt-4 text-indigo-600 font-medium"
+                              className="mt-4 text-gray-800 font-medium"
                             >
                               Start shopping &rarr;
                             </button>
