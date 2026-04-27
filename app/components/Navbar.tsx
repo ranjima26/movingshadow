@@ -31,9 +31,14 @@ export default function Navbar() {
                     <div className="flex items-center space-x-3">
                         <PiShoppingCartBold className="text-2xl cursor-pointer" />
                         {session ? (
-                            <button onClick={() => signOut()} className="text-xl cursor-pointer" title="Sign Out">
-                                <FaSignOutAlt />
-                            </button>
+                            <div className="flex items-center space-x-3">
+                                <Link href="/profile" className="text-xl cursor-pointer">
+                                    <FaUserAlt />
+                                </Link>
+                                <button onClick={() => signOut()} className="text-xl cursor-pointer" title="Sign Out">
+                                    <FaSignOutAlt />
+                                </button>
+                            </div>
                         ) : (
                             <FaUserAlt onClick={() => setIsAuthModalOpen(true)} className="text-xl cursor-pointer" />
                         )}
@@ -92,7 +97,10 @@ export default function Navbar() {
                             </Link>
                             {session ? (
                                 <div className="flex items-center gap-4">
-                                    <span className="text-sm font-medium text-gray-700 hidden lg:inline">Hello, {session.user?.name?.split(' ')[0]}</span>
+                                    <Link href="/profile" className="flex items-center gap-2 text-gray-700 hover:text-black transition">
+                                        <FaUserAlt className="text-xl" />
+                                        <span className="text-sm font-medium hidden lg:inline">Hello, {session.user?.name?.split(' ')[0]}</span>
+                                    </Link>
                                     <button onClick={() => signOut()} className="text-xl cursor-pointer hover:text-red-500 transition" title="Sign Out">
                                         <FaSignOutAlt />
                                     </button>
@@ -119,9 +127,16 @@ export default function Navbar() {
                         <Link href="/shop" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/shop" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Shop</Link>
                         <Link href="/contact" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/contact" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>Contact</Link>
                         {session ? (
-                             <button onClick={() => { signOut(); setMenuOpen(false); }} className="px-2 py-2 text-left text-red-600 font-medium hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2">
-                                <FaSignOutAlt /> Logout
-                             </button>
+                            <>
+                                <Link href="/profile" className={`px-2 py-2 rounded-lg transition-colors ${pathname === "/profile" ? "bg-white text-gray-900 border border-gray-200 font-medium shadow-sm" : "text-gray-700 hover:bg-gray-50"}`} onClick={() => setMenuOpen(false)}>
+                                    <div className="flex items-center gap-2">
+                                        <FaUserAlt /> My Profile
+                                    </div>
+                                </Link>
+                                <button onClick={() => { signOut(); setMenuOpen(false); }} className="px-2 py-2 text-left text-red-600 font-medium hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2">
+                                    <FaSignOutAlt /> Logout
+                                </button>
+                            </>
                         ) : (
                             <button onClick={() => { setIsAuthModalOpen(true); setMenuOpen(false); }} className="px-2 py-2 text-left text-gray-900 font-bold hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-2">
                                 <FaUserAlt /> Login / Sign Up

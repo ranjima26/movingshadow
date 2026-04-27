@@ -3,10 +3,18 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useCart } from '../context/CartContext'
-import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, cartTotal } = useCart()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  // Close drawer on route change
+  useEffect(() => {
+    setIsCartOpen(false)
+  }, [pathname, setIsCartOpen])
 
   return (
     <Dialog open={isCartOpen} onClose={setIsCartOpen} className="relative z-50">
@@ -78,7 +86,7 @@ export default function CartDrawer() {
                                     <button
                                       type="button"
                                       onClick={() => removeFromCart(product._id)}
-                                      className="font-medium text-indigo-600 hover:text-indigo-500"
+                                      className="font-medium text-red-600 hover:text-indigo-500"
                                     >
                                       Remove
                                     </button>
@@ -101,13 +109,15 @@ export default function CartDrawer() {
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
-                      <Link
-                        href="/checkout"
-                        className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                        onClick={() => setIsCartOpen(false)}
+                      <button
+                        onClick={() => {
+                          setIsCartOpen(false);
+                          window.location.href = '/buynow';
+                        }}
+                        className="w-full flex items-center justify-center rounded-md border border-transparent bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-gray-800"
                       >
                         Checkout
-                      </Link>
+                      </button>
                     </div>
                     <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                       <p>
@@ -115,7 +125,7 @@ export default function CartDrawer() {
                         <button
                           type="button"
                           onClick={() => setIsCartOpen(false)}
-                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                          className="font-medium text-gray-600 hover:text-indigo-500"
                         >
                           Continue Shopping
                           <span aria-hidden="true"> &rarr;</span>

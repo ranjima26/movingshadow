@@ -1,26 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { 
-    MdPerson, 
-    MdShoppingBag, 
-    MdLocationOn, 
-    MdLogout, 
+import { signOut, useSession } from "next-auth/react";
+import {
+    MdPerson,
+    MdShoppingBag,
+    MdLocationOn,
+    MdLogout,
     MdEdit,
     MdEmail,
- 
+
     MdArrowForwardIos
 } from "react-icons/md";
 import { motion } from "motion/react";
 
 export default function Profile() {
-    const [activeTab, setActiveTab] = useState("orders");
+    const { data: session } = useSession();
+    const [activeTab, setActiveTab] = useState("profile");
 
     const user = {
-        name: "John Doe",
-        email: "johndoe@example.com",
-        phone: "+91 98765 43210",
-        
+        name: session?.user?.name || "User",
+        email: session?.user?.email || "No email",
+        phone: "+91 0000000000",
         orders: 12,
         address: "Kochi, Kerala, India"
     };
@@ -45,14 +46,14 @@ export default function Profile() {
                                 <MdEdit className="text-sm" />
                             </button>
                         </div>
-                        
+
                         <div className="text-center md:text-left space-y-2">
                             <h1 className="text-3xl font-black text-gray-900">{user.name}</h1>
                             <div className="flex flex-wrap justify-center md:justify-start gap-4 text-gray-500 text-sm font-medium">
                                 <span className="flex items-center gap-1"><MdEmail /> {user.email}</span>
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
                 </div>
@@ -60,23 +61,14 @@ export default function Profile() {
 
             <div className="max-w-7xl mx-auto px-4 mt-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
-                    
+
                     {/* Sidebar Navigation */}
                     <div className="lg:col-span-1 space-y-4">
                         <div className="bg-white rounded-[30px] p-6 border border-gray-100 shadow-sm sticky top-24">
                             <nav className="space-y-2">
-                                <button 
-                                    onClick={() => setActiveTab("orders")}
-                                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${activeTab === 'orders' ? 'bg-black text-white shadow-lg' : 'text-gray-600 hover:bg-gray-50'}`}
-                                >
-                                    <div className="flex items-center gap-3">
-                                        <MdShoppingBag className="text-xl" />
-                                        <span className="font-bold">My Orders</span>
-                                    </div>
-                                    <MdArrowForwardIos className="text-xs" />
-                                </button>
 
-                                <button 
+
+                                <button
                                     onClick={() => setActiveTab("profile")}
                                     className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${activeTab === 'profile' ? 'bg-black text-white shadow-lg' : 'text-gray-600 hover:bg-gray-50'}`}
                                 >
@@ -87,11 +79,23 @@ export default function Profile() {
                                     <MdArrowForwardIos className="text-xs" />
                                 </button>
 
-                              
+                                <button
+                                    onClick={() => setActiveTab("orders")}
+                                    className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${activeTab === 'orders' ? 'bg-black text-white shadow-lg' : 'text-gray-600 hover:bg-gray-50'}`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <MdShoppingBag className="text-xl" />
+                                        <span className="font-bold">My Orders</span>
+                                    </div>
+                                    <MdArrowForwardIos className="text-xs" />
+                                </button>
 
 
                                 <div className="pt-4 mt-4 border-t border-gray-100">
-                                    <button className="w-full flex items-center gap-3 p-4 rounded-2xl text-red-500 hover:bg-red-50 transition-all font-bold">
+                                    <button
+                                        onClick={() => signOut({ callbackUrl: "/" })}
+                                        className="w-full flex items-center gap-3 p-4 rounded-2xl text-red-500 hover:bg-red-50 transition-all font-bold"
+                                    >
                                         <MdLogout className="text-xl" />
                                         <span>Logout</span>
                                     </button>
@@ -102,7 +106,7 @@ export default function Profile() {
 
                     {/* Main Content Area */}
                     <div className="lg:col-span-3">
-                        <motion.div 
+                        <motion.div
                             key={activeTab}
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -123,7 +127,7 @@ export default function Profile() {
                                                         <p className="text-gray-400 text-xs font-bold">{order.date} • {order.items} Items</p>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div className="flex items-center justify-between md:justify-end w-full md:w-auto gap-10">
                                                     <div className="text-right">
                                                         <p className="text-lg font-black text-gray-900">{order.total}</p>
@@ -178,7 +182,7 @@ export default function Profile() {
                                 </div>
                             )}
 
-                            
+
                         </motion.div>
                     </div>
                 </div>

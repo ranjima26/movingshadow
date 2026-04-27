@@ -173,12 +173,12 @@ export default function CartPage() {
             </dl>
 
             <div className="mt-10">
-              <button
-                type="button"
-                className="w-full rounded-full border border-transparent bg-black px-4 py-4 text-base font-bold text-white shadow-lg hover:bg-gray-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+              <Link
+                href="/buynow"
+                className="w-full flex items-center justify-center rounded-full border border-transparent bg-black px-4 py-4 text-base font-bold text-white shadow-lg hover:bg-gray-800 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 text-center"
               >
                 Checkout
-              </button>
+              </Link>
             </div>
 
             <div className="mt-6 text-center text-sm text-gray-500">

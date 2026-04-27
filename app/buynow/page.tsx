@@ -3,8 +3,10 @@
 import { useState } from "react";
 import { FaShippingFast } from "react-icons/fa";
 import { MdPayment, MdLocalShipping, MdCreditCard, MdShield } from "react-icons/md";
+import { useCart } from "../context/CartContext";
 
 export default function BuyNow() {
+    const { cart, cartTotal } = useCart();
     const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
 
     return (
@@ -138,22 +140,26 @@ export default function BuyNow() {
                             <div className="bg-gray-200 rounded-[30px] p-8 border border-gray-300 shadow-sm sticky top-32">
                                 <h2 className="text-2xl font-bold text-gray-700 tracking-tight mb-4" >Summarised</h2>
 
-                                <div className="flex items-center gap-4 bg-gray-100 p-4 rounded-2xl mb-8 relative border border-white/50">
-                                    <div className="relative">
-                                        <img src="/assets/banners/shop2.png" alt="Product" className="w-16 h-16 object-cover rounded-xl" />
-                                        <span className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">1</span>
-                                    </div>
-                                    <div className="flex-1">
-                                        <h3 className="text-gray-800 font-bold">Linen Utility Jacket</h3>
-                                        <p className="text-gray-500 text-xs">400g</p>
-                                    </div>
-                                    <span className="text-gray-800 font-bold">₹300</span>
+                                <div className="space-y-4 mb-4">
+                                    {cart.map((item) => (
+                                        <div key={item._id} className="flex items-center gap-4 bg-gray-100 p-4 rounded-2xl relative border border-white/50">
+                                            <div className="relative">
+                                                <img src={item.imageUrl} alt={item.name} className="w-16 h-16 object-cover rounded-xl" />
+                                                <span className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">{item.quantity}</span>
+                                            </div>
+                                            <div className="flex-1">
+                                                <h3 className="text-gray-800 font-bold">{item.name}</h3>
+                                                <p className="text-gray-500 text-xs">{item.category}</p>
+                                            </div>
+                                            <span className="text-gray-800 font-bold">₹{item.price * item.quantity}</span>
+                                        </div>
+                                    ))}
                                 </div>
 
                                 <div className="space-y-4 px-2">
                                     <div className="flex justify-between text-gray-600">
                                         <span>Subtotal</span>
-                                        <span className="text-gray-800 font-bold">₹300</span>
+                                        <span className="text-gray-800 font-bold">₹{cartTotal}</span>
                                     </div>
                                     <div className="flex justify-between text-gray-600">
                                         <span>Shipping</span>
@@ -163,7 +169,7 @@ export default function BuyNow() {
 
                                 <div className="bg-gray-100 p-6 rounded-3xl mt-8 flex justify-between items-center border border-white/50">
                                     <span className="text-gray-700 text-lg font-bold">Total Amount</span>
-                                    <span className="text-gray-900 text-3xl font-black">₹300</span>
+                                    <span className="text-gray-900 text-3xl font-black">₹{cartTotal}</span>
                                 </div>
 
                                 <div className="mt-8 flex gap-3 text-gray-500 text-[11px] leading-tight px-2 bg-white/50 p-4 rounded-2xl border border-white/20">
